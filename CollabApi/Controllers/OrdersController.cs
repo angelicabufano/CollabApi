@@ -12,47 +12,47 @@ namespace CollabApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class OrdersController : ControllerBase
     {
         private readonly CollabApiContext _context;
 
-        public CustomersController(CollabApiContext context)
+        public OrdersController(CollabApiContext context)
         {
             _context = context;
         }
 
-        // GET: api/Customers
+        // GET: api/Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomer()
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
-            return await _context.Customers.ToListAsync();
+            return await _context.Orders.ToListAsync();
         }
 
-        // GET: api/Customers/5
+        // GET: api/Orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> GetCustomer(int id)
+        public async Task<ActionResult<Order>> GetOrder(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            var order = await _context.Orders.FindAsync(id);
 
-            if (customer == null)
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return customer;
+            return order;
         }
 
-        // PUT: api/Customers/5
+        // PUT: api/Orders/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomer(int id, Customer customer)
+        public async Task<IActionResult> PutOrder(int id, Order order)
         {
-            if (id != customer.Id)
+            if (id != order.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(customer).State = EntityState.Modified;
+            _context.Entry(order).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace CollabApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CustomerExists(id))
+                if (!OrderExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace CollabApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Customers
+        // POST: api/Orders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
+        public async Task<ActionResult<Order>> PostOrder(Order order)
         {
-            _context.Customers.Add(customer);
+            _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
+            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
         }
 
-        // DELETE: api/Customers/5
+        // DELETE: api/Orders/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCustomer(int id)
+        public async Task<IActionResult> DeleteOrder(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
+            var order = await _context.Orders.FindAsync(id);
+            if (order == null)
             {
                 return NotFound();
             }
 
-            _context.Customers.Remove(customer);
+            _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool CustomerExists(int id)
+        private bool OrderExists(int id)
         {
-            return _context.Customers.Any(e => e.Id == id);
+            return _context.Orders.Any(e => e.Id == id);
         }
     }
 }

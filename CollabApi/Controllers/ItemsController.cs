@@ -12,47 +12,47 @@ namespace CollabApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class ItemsController : ControllerBase
     {
         private readonly CollabApiContext _context;
 
-        public CustomersController(CollabApiContext context)
+        public ItemsController(CollabApiContext context)
         {
             _context = context;
         }
 
-        // GET: api/Customers
+        // GET: api/Items
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomer()
+        public async Task<ActionResult<IEnumerable<Item>>> GetItems()
         {
-            return await _context.Customers.ToListAsync();
+            return await _context.Items.ToListAsync();
         }
 
-        // GET: api/Customers/5
+        // GET: api/Items/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> GetCustomer(int id)
+        public async Task<ActionResult<Item>> GetItem(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            var item = await _context.Items.FindAsync(id);
 
-            if (customer == null)
+            if (item == null)
             {
                 return NotFound();
             }
 
-            return customer;
+            return item;
         }
 
-        // PUT: api/Customers/5
+        // PUT: api/Items/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomer(int id, Customer customer)
+        public async Task<IActionResult> PutItem(int id, Item item)
         {
-            if (id != customer.Id)
+            if (id != item.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(customer).State = EntityState.Modified;
+            _context.Entry(item).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace CollabApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CustomerExists(id))
+                if (!ItemExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace CollabApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Customers
+        // POST: api/Items
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
+        public async Task<ActionResult<Item>> PostItem(Item item)
         {
-            _context.Customers.Add(customer);
+            _context.Items.Add(item);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
+            return CreatedAtAction("GetItem", new { id = item.Id }, item);
         }
 
-        // DELETE: api/Customers/5
+        // DELETE: api/Items/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCustomer(int id)
+        public async Task<IActionResult> DeleteItem(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
+            var item = await _context.Items.FindAsync(id);
+            if (item == null)
             {
                 return NotFound();
             }
 
-            _context.Customers.Remove(customer);
+            _context.Items.Remove(item);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool CustomerExists(int id)
+        private bool ItemExists(int id)
         {
-            return _context.Customers.Any(e => e.Id == id);
+            return _context.Items.Any(e => e.Id == id);
         }
     }
 }

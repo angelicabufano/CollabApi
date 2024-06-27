@@ -12,47 +12,47 @@ namespace CollabApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class OrderLinesController : ControllerBase
     {
         private readonly CollabApiContext _context;
 
-        public CustomersController(CollabApiContext context)
+        public OrderLinesController(CollabApiContext context)
         {
             _context = context;
         }
 
-        // GET: api/Customers
+        // GET: api/OrderLines
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomer()
+        public async Task<ActionResult<IEnumerable<OrderLine>>> GetOrderLine()
         {
-            return await _context.Customers.ToListAsync();
+            return await _context.OrderLine.ToListAsync();
         }
 
-        // GET: api/Customers/5
+        // GET: api/OrderLines/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> GetCustomer(int id)
+        public async Task<ActionResult<OrderLine>> GetOrderLine(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            var orderLine = await _context.OrderLine.FindAsync(id);
 
-            if (customer == null)
+            if (orderLine == null)
             {
                 return NotFound();
             }
 
-            return customer;
+            return orderLine;
         }
 
-        // PUT: api/Customers/5
+        // PUT: api/OrderLines/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomer(int id, Customer customer)
+        public async Task<IActionResult> PutOrderLine(int id, OrderLine orderLine)
         {
-            if (id != customer.Id)
+            if (id != orderLine.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(customer).State = EntityState.Modified;
+            _context.Entry(orderLine).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace CollabApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CustomerExists(id))
+                if (!OrderLineExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace CollabApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Customers
+        // POST: api/OrderLines
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
+        public async Task<ActionResult<OrderLine>> PostOrderLine(OrderLine orderLine)
         {
-            _context.Customers.Add(customer);
+            _context.OrderLine.Add(orderLine);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
+            return CreatedAtAction("GetOrderLine", new { id = orderLine.Id }, orderLine);
         }
 
-        // DELETE: api/Customers/5
+        // DELETE: api/OrderLines/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCustomer(int id)
+        public async Task<IActionResult> DeleteOrderLine(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
+            var orderLine = await _context.OrderLine.FindAsync(id);
+            if (orderLine == null)
             {
                 return NotFound();
             }
 
-            _context.Customers.Remove(customer);
+            _context.OrderLine.Remove(orderLine);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool CustomerExists(int id)
+        private bool OrderLineExists(int id)
         {
-            return _context.Customers.Any(e => e.Id == id);
+            return _context.OrderLine.Any(e => e.Id == id);
         }
     }
 }
