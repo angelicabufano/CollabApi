@@ -1,8 +1,13 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using CollabApi.Data;
 namespace CollabApi;
 
 public class Program {
     public static void Main(string[] args) {
         var builder = WebApplication.CreateBuilder(args);
+        builder.Services.AddDbContext<CollabApiContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("CollabApiContext") ?? throw new InvalidOperationException("Connection string 'CollabApiContext' not found.")));
 
         // Add services to the container.
 
