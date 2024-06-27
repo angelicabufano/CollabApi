@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CollabApi;
+namespace CollabApi.Model;
 
-public class Customer {
+public class Customer
+{
 
     public int Id { get; set; }
     [StringLength(30)]
@@ -13,7 +14,7 @@ public class Customer {
     [StringLength(30)]
     public string State { get; set; } = string.Empty;
     [Column("decimal(11,2)")]
-    public decimal Sales { get; set; } 
+    public decimal Sales { get; set; }
     public bool Active { get; set; }
 
 }
