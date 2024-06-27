@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using CollabApi;
+using CollabApi.Model;
 
 namespace CollabApi.Data
 {
@@ -14,7 +14,7 @@ namespace CollabApi.Data
         {
         }
 
-        public DbSet<CollabApi.Customer> Customer { get; set; } = default!;
-        public DbSet<CollabApi.Employee> Employee { get; set; } = default!;
+        public DbSet<Customer> Customer { get; set; } = default!;
+        public DbSet<Employee> Employee { get; set; } = default!;
     }
 }

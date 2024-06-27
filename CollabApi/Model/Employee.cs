@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CollabApi;
+namespace CollabApi.Model;
 
-public class Employee {
+public class Employee
+{
 
     public int Id { get; set; }
     [StringLength(30)]

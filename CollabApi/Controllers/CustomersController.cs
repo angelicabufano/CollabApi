@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CollabApi;
 using CollabApi.Data;
+using CollabApi.Model;
 
 namespace CollabApi.Controllers
 {
