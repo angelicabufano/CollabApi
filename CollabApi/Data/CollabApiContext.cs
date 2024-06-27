@@ -14,7 +14,12 @@ namespace CollabApi.Data
         {
         }
 
-        public DbSet<Customer> Customer { get; set; } = default!;
-        public DbSet<Employee> Employee { get; set; } = default!;
+        public DbSet<Customer> Customers { get; set; } = default!;
+        public DbSet<Employee> Employees { get; set; } = default!;
+        
+        public DbSet<Item> Items { get; set; } = default!;
+
+        public DbSet<Order> Orders { get; set; } = default!;
+        public DbSet<CollabApi.Model.OrderLine> OrderLine { get; set; } = default!;
     }
 }
