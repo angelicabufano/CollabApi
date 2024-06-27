@@ -4,6 +4,7 @@ using CollabApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CollabApi.Migrations
 {
     [DbContext(typeof(CollabApiContext))]
-    partial class CollabApiContextModelSnapshot : ModelSnapshot
+    [Migration("20240627175132_ added order, orderlines, Items and controllers")]
+    partial class addedorderorderlinesItemsandcontrollers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
