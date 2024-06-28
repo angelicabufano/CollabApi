@@ -21,6 +21,24 @@ namespace CollabApi.Controllers
             _context = context;
         }
 
+        private async Task<IActionResult> RecalculateOrderTotal(int orderId) {
+            // read the order to be recalculated
+            var order = await _context.Orders.FindAsync(orderId);
+            if (order is null) {
+                return NotFound();
+            }
+            order.Total = (from ol in _context.OrderLine
+                           join i in _context.Items
+                               on ol.ItemId equals i.Id
+                           where ol.OrderId == orderId
+                           select new {
+                               LineTotal = ol.Quantity * i.Price
+                           }).Sum(x => x.LineTotal);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+
         // GET: api/OrderLines
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderLine>>> GetOrderLine()
@@ -57,6 +75,7 @@ namespace CollabApi.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                await RecalculateOrderTotal(orderLine.OrderId);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,6 +99,7 @@ namespace CollabApi.Controllers
         {
             _context.OrderLine.Add(orderLine);
             await _context.SaveChangesAsync();
+            await RecalculateOrderTotal(orderLine.OrderId);
 
             return CreatedAtAction("GetOrderLine", new { id = orderLine.Id }, orderLine);
         }
@@ -96,6 +116,7 @@ namespace CollabApi.Controllers
 
             _context.OrderLine.Remove(orderLine);
             await _context.SaveChangesAsync();
+            await RecalculateOrderTotal(orderLine.OrderId);
 
             return NoContent();
         }
