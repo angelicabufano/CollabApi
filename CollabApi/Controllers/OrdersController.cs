@@ -21,6 +21,14 @@ namespace CollabApi.Controllers
             _context = context;
         }
 
+        //GET: api/Orders/status/{string}
+        [HttpGet("status/{status}")]
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrderStatus(string status)
+        {
+            return await _context.Orders.Where(x => x.Status == status).ToListAsync();
+
+        }
+
         // GET: api/Orders
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
@@ -40,6 +48,15 @@ namespace CollabApi.Controllers
             }
 
             return order;
+        }
+
+        //PUT: api/orders/staged
+        [HttpPut("Staged/{Id}")]
+        public async Task<IActionResult> StagedOrder(int Id, Order order)
+        {
+            order.Status = "Staged";
+            return await PutOrder(Id, order);
+
         }
 
         // PUT: api/Orders/5
@@ -78,6 +95,8 @@ namespace CollabApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
+
+            order.Status = "NEW";
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
